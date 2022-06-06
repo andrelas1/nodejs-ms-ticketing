@@ -9,6 +9,8 @@ import {
 } from "@as1/ticketing-common";
 import { createTicketRouter } from "./routes/new";
 import { showTicketRouter } from "./routes/show";
+import { updateTicketRouter } from "./routes/update";
+import { indexTicketRouter } from "./routes";
 
 const app = express();
 app.set("trust proxy", true); // because we use nginx as a proxy
@@ -21,8 +23,10 @@ app.use(
 );
 app.use(currentUser);
 
+app.use(indexTicketRouter);
 app.use(createTicketRouter);
 app.use(showTicketRouter);
+app.use(updateTicketRouter);
 
 app.all("*", () => {
   throw new NotFoundError();
